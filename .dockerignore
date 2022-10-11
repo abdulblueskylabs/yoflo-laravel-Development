@@ -1,0 +1,19 @@
+# Abdul Config Files
+config/abdul-upload-image-4e82c9bb1cee.json
+config/abdul-upload-image-4e82c9bb1cee.jsonZone.Identifier
+config/yoflo-334006-ac64607fa1bf.json
+
+# General Config Files
+config/google-app-credentials.json
+config/pubsub.json
+config/service.json
+
+# PREVENT /ALL/ SECRET FILES FROM BEING UPLOADED
+config/*.json
+config/*.env
+config/*.ini
+
+# Additional Files we don't need
+.github
+.git
+.DS_Store

@@ -1,0 +1,22 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build','--tag', 'asia.gcr.io/yoflo-334006/backend/uat:latest', '--tag', 'asia.gcr.io/yoflo-334006/backend/uat:$BUILD_ID','--tag', 'asia.gcr.io/yoflo-334006/backend/uat:$SHORT_SHA', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push','asia.gcr.io/yoflo-334006/backend/uat:latest']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'asia.gcr.io/yoflo-334006/backend/uat:$BUILD_ID']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'asia.gcr.io/yoflo-334006/backend/uat:$SHORT_SHA']
+- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  id: Deploy image to cloud run
+  args:
+      - run
+      - services
+      - update
+      - 'uat-backend'
+      - '--platform=managed'
+      - '--image=asia.gcr.io/yoflo-334006/backend/uat:latest'
+      - '--region=australia-southeast1'
+      - '--quiet'
+  entrypoint: gcloud
+timeout: 1200s
